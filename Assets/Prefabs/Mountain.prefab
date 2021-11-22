@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7531888056236108236}
   m_Layer: 0
   m_Name: Mountain
-  m_TagString: Untagged
+  m_TagString: Mountain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

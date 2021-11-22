@@ -4,25 +4,21 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class MapGrid
+public class MapGrid : MonoBehaviour
 {
-    private int width, length;
-    private Cell[,] cellGrid;
+    [SerializeField]
+    public Cell[,] cellGrid;
+    public int width;
+    public int height;
 
-    public int Width { get => width; }
-    public int Length { get => length; }
-
-    public MapGrid(int width, int length)
+    void Awake()
     {
-        this.width = width;
-        this.length = length;
         CreateGrid();
     }
-
     private void CreateGrid()
     {
-        cellGrid = new Cell[length, width];
-        for (int row = 0; row < length; row++)
+        cellGrid = new Cell[height, width];
+        for (int row = 0; row < height; row++)
         {
             for (int col = 0; col < width; col++)
             {
@@ -61,7 +57,7 @@ public class MapGrid
 
     public bool IsCellValid(float x, float z)
     {
-        if (x >= width || x < 0 || z >= length || z < 0)
+        if (x >= width || x < 0 || z >= height || z < 0)
         {
             return false;
         }
@@ -75,11 +71,6 @@ public class MapGrid
             return null;
         }
         return cellGrid[z, x];
-    }
-
-    public Cell GetCell(float x, float z)
-    {
-        return GetCell((int)x, (int)z);
     }
     public int CalculateIndexFromCoordinates(float x, float z)
     {
