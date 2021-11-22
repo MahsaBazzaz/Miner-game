@@ -6,6 +6,7 @@ using UnityEngine;
 public class Minor : MonoBehaviour
 {
     public MapGrid grid;
+    public MapVisualizer mapVisualizer;
     private Camera cam;
     void Awake()
     {
@@ -22,10 +23,20 @@ public class Minor : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Cell c = grid.GetCell((int)hit.transform.position.x, (int)hit.transform.position.y);
+                int x = (int)hit.transform.position.x;
+                int y = (int)hit.transform.position.y;
+                Cell c = grid.GetCell(x, y);
                 if (c != null)
                 {
-                    Debug.Log(c.ObjectType);
+                    // if (c.IsTaken)
+                    // {
+                    //     Debug.Log(c.IsTaken);
+                    // }
+                    // else
+                    // {
+                        grid.SetCellTaken(x, y);
+                        mapVisualizer.SetTileTaken(Input.mousePosition);
+                    // }
                 }
             }
         }

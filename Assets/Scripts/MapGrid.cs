@@ -39,6 +39,10 @@ public class MapGrid : MonoBehaviour
         cellGrid[z, x].ObjectType = objectType;
         cellGrid[z, x].IsTaken = isTaken;
     }
+    public void SetCellTaken(int x, int z)
+    {
+        cellGrid[z, x].IsTaken = true;
+    }
     public bool IsCellTaken(int x, int z)
     {
         return cellGrid[z, x].IsTaken;

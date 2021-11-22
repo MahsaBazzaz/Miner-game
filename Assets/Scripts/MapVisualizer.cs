@@ -50,6 +50,16 @@ public class MapVisualizer : MonoBehaviour
         tile.transform.localPosition = new Vector3(x, y, 0);
 
     }
+    public void SetTileTaken(Vector3 pos)
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(pos);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Destroy(hit.transform.gameObject);
+        }
+    }
     public int getTileCount()
     {
         return tileset.Count;
