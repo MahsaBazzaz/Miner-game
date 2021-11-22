@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -26,31 +27,26 @@ public class MapGrid
             for (int col = 0; col < width; col++)
             {
                 cellGrid[row, col] = new Cell(col, row);
+                cellGrid[row, col].IsTaken = false;
+                cellGrid[row, col].ObjectType = CellObjectType.Empty;
             }
         }
     }
-
+    public void SetCell(int x, int z, int objectTypeIndex, bool isTaken = false)
+    {
+        CellObjectType ctype = (CellObjectType)objectTypeIndex;
+        cellGrid[z, x].ObjectType = ctype;
+        cellGrid[z, x].IsTaken = isTaken;
+    }
     public void SetCell(int x, int z, CellObjectType objectType, bool isTaken = false)
     {
         cellGrid[z, x].ObjectType = objectType;
         cellGrid[z, x].IsTaken = isTaken;
     }
-
-    public void SetCell(float x, float z, CellObjectType objectType, bool isTaken = false)
-    {
-        SetCell((int)x, (int)z, objectType, isTaken);
-    }
-
     public bool IsCellTaken(int x, int z)
     {
         return cellGrid[z, x].IsTaken;
     }
-
-    public bool IsCellTaken(float x, float z)
-    {
-        return cellGrid[(int)z, (int)x].IsTaken;
-    }
-
     public int CalculateIndexFromCoordinates(int x, int z)
     {
         return x + z * width;
@@ -85,9 +81,6 @@ public class MapGrid
     {
         return GetCell((int)x, (int)z);
     }
-
-
-
     public int CalculateIndexFromCoordinates(float x, float z)
     {
         return (int)x + (int)z * width;

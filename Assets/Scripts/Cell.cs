@@ -24,10 +24,10 @@ public class Cell
 
 public enum CellObjectType
 {
-    Empty,
-    Eoad,
-    Obstacle,
-    Start,
-    Exit
+    Empty = -1,
+    Plain = 0,
+    Forest = 1,
+    Hill = 2,
+    Mountain = 3
 }
 

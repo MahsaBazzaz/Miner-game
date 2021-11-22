@@ -3,15 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
-	{
-		public GridVisualizer gridVisualizer;
+{
+    public MapVisualizer mapVisualizer;
+    public int width, height;
+    public int xOrg;
+    public int yOrg;
+    private MapGrid grid;
+    private CandidateMap map;
+    public float magnification;
+    void Start()
+    {
+        grid = new MapGrid(width, height);
+        map = new CandidateMap(grid.Width, grid.Length);
+        mapVisualizer.CreateTileset();
+        mapVisualizer.CreateTileGroups();
+        int[,] gridTile = map.GenerateMap(xOrg, yOrg, magnification, mapVisualizer.getTileCount());
 
-		[Range(3,20)]
-		public int width, length = 11;
-		private MapGrid grid;
-		private void Start()
-		{
-			grid = new MapGrid(width, length);
-			gridVisualizer.VisualizeGrid(width, length);
-		}
-	}
+        for (int x = 0; x < width; x++)
+        {
+
+            for (int y = 0; y < height; y++)
+            {
+                grid.SetCell(x, y, gridTile[x, y]);
+                mapVisualizer.CreateTile(gridTile[x, y], x, y);
+            }
+        }
+    }
+
+}
