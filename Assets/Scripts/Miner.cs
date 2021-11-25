@@ -57,28 +57,28 @@ public class Miner : MonoBehaviour
                 if (c != null)
                 {
                     grid.SetCellTaken((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
-                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                    mapVisualizer.SetTileTaken(new Vector3((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y),-1));
                 }
 
                 c = grid.GetCell((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
                 if (c != null)
                 {
                     grid.SetCellTaken((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
-                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                    mapVisualizer.SetTileTaken(new Vector3((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y),-1));
                 }
 
                 c = grid.GetCell((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
                 if (c != null)
                 {
                     grid.SetCellTaken((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
-                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                    mapVisualizer.SetTileTaken(new Vector3((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y),-1));
                 }
 
                 c = grid.GetCell((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
                 if (c != null)
                 {
                     grid.SetCellTaken((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
-                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                    mapVisualizer.SetTileTaken(new Vector3((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y),-1));
                 }
                 IsInsertingChamber = false;
                 uIManager.OnChamberInserted();
