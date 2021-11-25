@@ -13,6 +13,7 @@ public class Miner : MonoBehaviour
     private Vector2 boxEndPos = Vector2.zero;
     public Texture selectTexture;
     public GameObject chamberPrefab;
+    public Transform ChamberParent;
     private Boolean IsDigging;
     private Boolean IsInsertingChamber;
     private GameObject chamberInstance;
@@ -48,13 +49,43 @@ public class Miner : MonoBehaviour
             Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, cam.nearClipPlane + 1));
             //The +1 is there so you don't overlap the object and the camera, otherwise the object is drawn "inside" of the camera, and therefore you're not able to see it!
             chamberInstance.transform.position = mouseWorldPosition;
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                chamberInstance.transform.position = new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, -1);
+
+                Cell c = grid.GetCell((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
+                if (c != null)
+                {
+                    grid.SetCellTaken((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
+                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                }
+
+                c = grid.GetCell((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
+                if (c != null)
+                {
+                    grid.SetCellTaken((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
+                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                }
+
+                c = grid.GetCell((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
+                if (c != null)
+                {
+                    grid.SetCellTaken((int)Mathf.Floor(mouseWorldPosition.x), (int)Mathf.Ceil(mouseWorldPosition.y));
+                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                }
+
+                c = grid.GetCell((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
+                if (c != null)
+                {
+                    grid.SetCellTaken((int)Mathf.Ceil(mouseWorldPosition.x), (int)Mathf.Floor(mouseWorldPosition.y));
+                    mapVisualizer.SetTileTaken(mouseWorldPosition);
+                }
+                IsInsertingChamber = false;
+                uIManager.OnChamberInserted();
+                chamberInstance = null;
+            }
         }
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            IsInsertingChamber = false;
-            uIManager.OnChamberInserted();
-            chamberInstance = null;
-        }
+
     }
 
     public void Dig()
@@ -65,6 +96,7 @@ public class Miner : MonoBehaviour
     {
         Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -1);
         chamberInstance = Instantiate(chamberPrefab, position, Quaternion.identity);
+        chamberInstance.transform.parent = ChamberParent;
         IsInsertingChamber = true;
     }
     private void HandleUnitSelection()
