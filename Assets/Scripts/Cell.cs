@@ -26,9 +26,9 @@ public class Cell
 public enum CellObjectType
 {
     Empty = -1,
-    Plain = 0,
-    Forest = 1,
-    Hill = 2,
-    Mountain = 3
+    Dirt = 0,
+    Greens = 1,
+    Stone = 2,
+    Water = 3
 }
 

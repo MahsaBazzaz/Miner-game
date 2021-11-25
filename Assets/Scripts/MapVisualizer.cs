@@ -8,20 +8,20 @@ public class MapVisualizer : MonoBehaviour
     List<List<int>> noise_grid = new List<List<int>>();
     Dictionary<int, GameObject> tile_groups;
     Dictionary<int, GameObject> tileset;
-    public GameObject prefab_plains;
-    public GameObject prefab_forest;
-    public GameObject prefab_hills;
-    public GameObject prefab_mountains;
+    public GameObject dirtPrefab;
+    public GameObject greensPrefab;
+    public GameObject stonePrefab;
+    public GameObject waterPrefab;
     public void CreateTileset()
     {
         /** Collect and assign ID codes to the tile prefabs, for ease of access.
             Best ordered to match land elevation. **/
 
         tileset = new Dictionary<int, GameObject>();
-        tileset.Add(0, prefab_plains);
-        tileset.Add(1, prefab_forest);
-        tileset.Add(2, prefab_hills);
-        tileset.Add(3, prefab_mountains);
+        tileset.Add(0, dirtPrefab);
+        tileset.Add(1, greensPrefab);
+        tileset.Add(2, stonePrefab);
+        tileset.Add(3, waterPrefab);
     }
     public void CreateTileGroups()
     {
