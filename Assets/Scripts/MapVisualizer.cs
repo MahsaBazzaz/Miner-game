@@ -68,7 +68,6 @@ public class MapVisualizer : MonoBehaviour
 
         if (Physics.Raycast(pos, Vector3.forward, out hit))
         {
-            Debug.Log(hit.transform.position);
             Destroy(hit.transform.gameObject);
         }
     }

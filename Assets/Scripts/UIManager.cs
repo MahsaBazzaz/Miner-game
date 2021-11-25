@@ -6,14 +6,22 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public Button DigButton;
+    public Button ChamberButton;
 
-    public void OnClick()
+    public void OnDigClick()
     {
         DigButton.interactable = false;
     }
-
-    public void OnRelease()
+    public void OnChamberClick()
+    {
+        ChamberButton.interactable = false;
+    }
+    public void OnDigFinished()
     {
         DigButton.interactable = true;
+    }
+    public void OnChamberInserted()
+    {
+        ChamberButton.interactable = true;
     }
 }

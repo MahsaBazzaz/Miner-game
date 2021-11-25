@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Minor : MonoBehaviour
+public class Miner : MonoBehaviour
 {
     public MapGrid grid;
     public MapVisualizer mapVisualizer;
@@ -42,8 +42,11 @@ public class Minor : MonoBehaviour
 
     public void Dig()
     {
-        Debug.Log("Dig");
         IsDigging = true;
+    }
+    public void InsertChamber()
+    {
+
     }
     private void HandleUnitSelection()
     {
@@ -93,11 +96,11 @@ public class Minor : MonoBehaviour
             for (int j = minY; j <= maxY; j++)
             {
                 // grid.SetCellTaken(i, j);
-                mapVisualizer.SetTileTaken(new Vector3(i, j,-5));
+                mapVisualizer.SetTileTaken(new Vector3(i, j, -5));
             }
         }
 
-        uIManager.OnRelease();
+        uIManager.OnDigFinished();
         IsDigging = false;
     }
 
