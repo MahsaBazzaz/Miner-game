@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapVisualizer : MonoBehaviour
 {
-    // private List<GameObject> obstacles;
+    public MapGrid grid;
     List<List<int>> noise_grid = new List<List<int>>();
     Dictionary<int, GameObject> tile_groups;
     Dictionary<int, GameObject> tileset;
@@ -50,13 +50,25 @@ public class MapVisualizer : MonoBehaviour
         tile.transform.localPosition = new Vector3(x, y, 0);
 
     }
+    // public void SetTileTaken(Vector3 pos)
+    // {
+    //     RaycastHit hit;
+    //     Ray ray = Camera.main.ScreenPointToRay(pos);
+
+    //     if (Physics.Raycast(ray, out hit))
+    //     {
+    //         Destroy(hit.transform.gameObject);
+    //     }
+    // }
+
     public void SetTileTaken(Vector3 pos)
     {
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(pos);
+        // Ray ray = Camera.main.ScreenPointToRay(pos);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(pos, Vector3.forward, out hit))
         {
+            Debug.Log(hit.transform.position);
             Destroy(hit.transform.gameObject);
         }
     }
