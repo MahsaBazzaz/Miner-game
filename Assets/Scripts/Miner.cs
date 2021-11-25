@@ -12,10 +12,14 @@ public class Miner : MonoBehaviour
     private Vector2 boxStartPos = Vector2.zero;
     private Vector2 boxEndPos = Vector2.zero;
     public Texture selectTexture;
+    public GameObject chamberPrefab;
     private Boolean IsDigging;
+    private Boolean IsInsertingChamber;
+    private GameObject chamberInstance;
     void Awake()
     {
         IsDigging = false;
+        IsInsertingChamber = false;
     }
     void Update()
     {
@@ -38,6 +42,19 @@ public class Miner : MonoBehaviour
                 boxEndPos = boxStartPos = Vector2.zero;
             }
         }
+        if (IsInsertingChamber)
+        {
+            Vector3 mouseScreenPosition = Input.mousePosition;
+            Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, cam.nearClipPlane + 1));
+            //The +1 is there so you don't overlap the object and the camera, otherwise the object is drawn "inside" of the camera, and therefore you're not able to see it!
+            chamberInstance.transform.position = mouseWorldPosition;
+        }
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            IsInsertingChamber = false;
+            uIManager.OnChamberInserted();
+            chamberInstance = null;
+        }
     }
 
     public void Dig()
@@ -46,7 +63,9 @@ public class Miner : MonoBehaviour
     }
     public void InsertChamber()
     {
-
+        Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -1);
+        chamberInstance = Instantiate(chamberPrefab, position, Quaternion.identity);
+        IsInsertingChamber = true;
     }
     private void HandleUnitSelection()
     {
