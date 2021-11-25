@@ -318,6 +318,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1075758732}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &546695971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,8 +632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033159a2c8185eb4e87d999f2d2a83f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 670114130}
-  mapVisualizer: {fileID: 1388395756}
+  uIManager: {fileID: 1075758732}
+  selectTexture: {fileID: 2800000, guid: 76e7780df57f36740b236421741f319f, type: 3}
 --- !u!1 &1075758728
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +645,7 @@ GameObject:
   - component: {fileID: 1075758729}
   - component: {fileID: 1075758731}
   - component: {fileID: 1075758730}
+  - component: {fileID: 1075758732}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -698,6 +711,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075758728}
   m_CullTransparentMesh: 1
+--- !u!114 &1075758732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075758728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a884c1457deb1844a5f11595d59dbd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DigButton: {fileID: 546695970}
 --- !u!1 &1388395754
 GameObject:
   m_ObjectHideFlags: 0
