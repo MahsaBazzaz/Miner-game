@@ -71,5 +71,23 @@ namespace GridSystemV2
                 Debug.Log(b.ToString());
             }
         }
+
+        public Vector3 GetNearestPointOnGrid(Vector3 position)
+        {
+            position -= transform.position;
+
+            int xCount = Mathf.RoundToInt(position.x / tileSize);
+            int yCount = Mathf.RoundToInt(position.y / tileSize);
+            int zCount = Mathf.RoundToInt(position.z / tileSize);
+
+            Vector3 result = new Vector3(
+                (float)xCount * tileSize,
+                (float)yCount * tileSize,
+                (float)zCount * tileSize);
+
+            result += transform.position;
+
+            return result;
+        }
     }
 }
