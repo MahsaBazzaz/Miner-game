@@ -19,17 +19,6 @@ namespace GridSystemV2
         }
         private void Update()
         {
-            // if (Input.GetMouseButtonDown(0))
-            // {
-            //     RaycastHit hitInfo;
-            //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            //     if (Physics.Raycast(ray, out hitInfo))
-            //     {
-            //         PlaceChamberNear(hitInfo.point);
-            //     }
-            // }
-
             if (IsInsertingChamber)
             {
                 Vector3 mouseScreenPosition = Input.mousePosition;
@@ -51,6 +40,7 @@ namespace GridSystemV2
             ChamberButton.interactable = false;
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -1);
             chamberInstance = Instantiate(chamberPrefab, position, Quaternion.identity);
+            chamberInstance.transform.localScale = new Vector3(grid.tileSize, grid.tileSize, 1);
             chamberInstance.transform.parent = ChamberParent;
             IsInsertingChamber = true;
         }

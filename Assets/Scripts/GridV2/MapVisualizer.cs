@@ -6,19 +6,20 @@ namespace GridSystemV2
 {
     public class MapVisualizer : MonoBehaviour
     {
+        public GameObject dirtPrefab;
+        public GameObject greensPrefab;
+        public GameObject stonePrefab;
+        public GameObject waterPrefab;
         private List<List<int>> noise_grid = new List<List<int>>();
         private Dictionary<int, GameObject> tile_groups;
         private Dictionary<int, GameObject> tileset;
-        private GameObject[] prefabs;
-        public void setPosition(float x, float y, float z)
+        void Awake()
         {
-            transform.position = new Vector3(x, y, z);
+            GameObject[] prefabs = { dirtPrefab, greensPrefab, stonePrefab, waterPrefab };
+            CreateTileset(prefabs);
+            CreateTileGroups();
         }
-        public void setPrefabs(GameObject[] prefabs)
-        {
-            this.prefabs = prefabs;
-        }
-        public void CreateTileset()
+        public void CreateTileset(GameObject[] prefabs)
         {
             /** Collect and assign ID codes to the tile prefabs, for ease of access.
                 Best ordered to match land elevation. **/
@@ -43,7 +44,7 @@ namespace GridSystemV2
                 tile_groups.Add(prefab_pair.Key, tile_group);
             }
         }
-        public void CreateTile(int x, int y, int tile_id)
+        public void CreateTile(int x, int y, int tile_id, Vector3 position)
         {
             /** Creates a new tile using the type id code, group it with common
                 tiles, set it's position and store the gameobject. **/
@@ -53,7 +54,7 @@ namespace GridSystemV2
             GameObject tile = Instantiate(tile_prefab, tile_group.transform);
 
             tile.name = string.Format("tile_x{0}_y{1}", x, y);
-            tile.transform.localPosition = new Vector3(x, y, 0);
+            tile.transform.localPosition = position;
         }
         public void DestroyTile(Vector3 pos)
         {

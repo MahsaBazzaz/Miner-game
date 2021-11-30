@@ -8,46 +8,36 @@ namespace GridSystemV2
     {
         public GridSystem grid;
         public MapVisualizer mapVisualizer;
-
-        [SerializeField]
-        public int width;
-        public int height;
         public int xOrg;
         public int yOrg;
-        public int tileSize;
-        public int layer;
         public float magnification;
-        public GameObject dirtPrefab;
-        public GameObject greensPrefab;
-        public GameObject stonePrefab;
-        public GameObject waterPrefab;
-        [SerializeField]
-        public Cell[] cells;
+        public int width;
+        public int height;
+        public int tileSize;
+        [SerializeField] public Cell[] cells;
         void Awake()
         {
+            this.width = grid.width;
+            this.height = grid.height;
+            this.tileSize = grid.tileSize;
             cells = new Cell[height * width];
-            grid.setGridSystemParams(height, width, tileSize, layer);
-            GameObject[] prefabs = { dirtPrefab, greensPrefab, stonePrefab, waterPrefab };
-            mapVisualizer.setPrefabs(prefabs);
         }
         void Start()
         {
-            Tile[,] tileGrid = grid.createGrid();
-            mapVisualizer.CreateTileset();
-            mapVisualizer.CreateTileGroups();
             // mapVisualizer.setPosition(-width / 2 + tileSize / 2, 0, height / 2 - ((byte)tileSize) / 2);
             generateMap(xOrg, yOrg, magnification, mapVisualizer.getTileCount());
         }
         public void generateMap(int x_offset, int y_offset, float magnification, int CellObjectTypeCount)
         {
-            for (int i = 0; i < width; i++)
+            for (int row = 0; row < height; row++)
             {
-                for (int j = 0; j < height; j++)
+                for (int col = 0; col < width; col++)
                 {
-                    int tile_id = getIdUsingPerlin(i, j, x_offset, y_offset, magnification, CellObjectTypeCount);
+                    int tile_id = getIdUsingPerlin(row, col, x_offset, y_offset, magnification, CellObjectTypeCount);
                     Cell.CellType t = (Cell.CellType)tile_id;
-                    cells[i + j * width] = new Cell { type = t, position = grid.calculateCoordinatesFromIndex(i + j * width) };
-                    mapVisualizer.CreateTile(i, j, tile_id);
+                    Vector3 pos = grid.calculateCoordinatesFromIndex(row + col * width);
+                    cells[row * width + col] = new Cell { type = t, position = pos };
+                    mapVisualizer.CreateTile(row, col, tile_id, pos);
                 }
             }
         }

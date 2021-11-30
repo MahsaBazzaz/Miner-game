@@ -8,40 +8,35 @@ namespace GridSystemV2
     public class GridSystem : MonoBehaviour
     {
         private Tile[,] cellGrid;
-        private int width;
-        private int height;
-        private int tileSize;
-        private int layer;
-        public void setGridSystemParams(int height, int width, int tileSize, int layer)
-        {
-            this.height = height;
-            this.width = width;
-            this.tileSize = tileSize;
-            this.layer = layer;
-        }
-        public Tile[,] createGrid()
+        public int width;
+        public int height;
+        public int tileSize;
+        public int layer;
+        public Color gizmosColor;
+        void Awake()
         {
             cellGrid = new Tile[height, width];
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row < height; row += tileSize)
             {
-                for (int col = 0; col < width; col++)
+                for (int col = 0; col < width; col += tileSize)
                 {
-                    cellGrid[row, col] = new Tile(col * tileSize, row * -tileSize, layer);
+                    cellGrid[row, col] = new Tile(row, col, layer);
+                    // GameObject go = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    // go.transform.localScale = new Vector3(tileSize, tileSize, 1);
+                    // go.transform.position = new Vector3(col, row, layer);
+                    // go.GetComponent<Renderer>().material.color = gizmosColor;
                 }
             }
-            return cellGrid;
         }
-        public int calculateIndexFromCoordinates(int x, int z)
+        public Tile[,] getGrid()
         {
-            int row = x / tileSize;
-            int col = z / tileSize;
-            return row + col * width;
+            return cellGrid;
         }
         public Vector3 calculateCoordinatesFromIndex(int index)
         {
-            int row = index % width;
-            int col = index / width;
-            return new Vector3(row * tileSize, 0, col * tileSize);
+            int row = index / width;
+            int col = index % width;
+            return new Vector3(row * tileSize, col * tileSize, layer);
         }
         public bool isTileValid(float x, float z)
         {
