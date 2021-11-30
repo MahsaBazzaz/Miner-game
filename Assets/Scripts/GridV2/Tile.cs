@@ -7,28 +7,16 @@ namespace GridSystemV2
     [Serializable]
     public class Tile
     {
-        private int x, z;
-        private bool isTaken;
-        private TileType objectType;
-
+        private int x, y, z;
         public int X { get => x; }
+        public int Y { get => y; }
         public int Z { get => z; }
-        public TileType type { get => objectType; set => objectType = value; }
 
-        public Tile(int x, int z)
+        public Tile(int x, int y, int z)
         {
             this.x = x;
+            this.y = y;
             this.z = z;
-            this.objectType = TileType.Empty;
         }
-    }
-
-    public enum TileType
-    {
-        Empty = -1,
-        Dirt = 0,
-        Greens = 1,
-        Stone = 2,
-        Water = 3
     }
 }

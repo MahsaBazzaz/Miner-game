@@ -5,47 +5,43 @@ using UnityEngine;
 
 namespace GridSystemV2
 {
-    public class GridSystem
+    public class GridSystem : MonoBehaviour
     {
         private Tile[,] cellGrid;
         private int width;
         private int height;
-
-        public GridSystem(int height, int width)
+        private int tileSize;
+        private int layer;
+        public void setGridSystemParams(int height, int width, int tileSize, int layer)
         {
             this.height = height;
             this.width = width;
+            this.tileSize = tileSize;
+            this.layer = layer;
         }
-        public void createGrid()
+        public Tile[,] createGrid()
         {
             cellGrid = new Tile[height, width];
             for (int row = 0; row < height; row++)
             {
                 for (int col = 0; col < width; col++)
                 {
-                    cellGrid[row, col] = new Tile(col, row);
-                    cellGrid[row, col].type = TileType.Empty;
+                    cellGrid[row, col] = new Tile(col * tileSize, row * -tileSize, layer);
                 }
             }
-        }
-        public void setTile(int x, int z, int tileTypeIndex, bool isTaken = false)
-        {
-            TileType ctype = (TileType)tileTypeIndex;
-            cellGrid[z, x].type = ctype;
-        }
-        public void setTile(int x, int z, TileType objectType, bool isTaken = false)
-        {
-            cellGrid[z, x].type = objectType;
+            return cellGrid;
         }
         public int calculateIndexFromCoordinates(int x, int z)
         {
-            return x + z * width;
+            int row = x / tileSize;
+            int col = z / tileSize;
+            return row + col * width;
         }
-        public Vector3 calculateCoordinatesFromIndex(int randomIndex)
+        public Vector3 calculateCoordinatesFromIndex(int index)
         {
-            int x = randomIndex % width;
-            int z = randomIndex / width;
-            return new Vector3(x, 0, z);
+            int row = index % width;
+            int col = index / width;
+            return new Vector3(row * tileSize, 0, col * tileSize);
         }
         public bool isTileValid(float x, float z)
         {
@@ -55,19 +51,14 @@ namespace GridSystemV2
             }
             return true;
         }
-        public Tile getTile(int x, int z)
+        public Tile getTile(int row, int col)
         {
-            if (isTileValid(x, z) == false)
+            if (isTileValid(row, col) == false)
             {
                 return null;
             }
-            return cellGrid[z, x];
+            return cellGrid[col, row];
         }
-        public int calculateIndexFromCoordinates(float x, float z)
-        {
-            return (int)x + (int)z * width;
-        }
-
         public void checkCoordinates()
         {
             for (int i = 0; i < cellGrid.GetLength(0); i++)

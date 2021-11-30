@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ namespace GridSystemV2
 {
     public class MapGenerator : MonoBehaviour
     {
+        public GridSystem grid;
         public MapVisualizer mapVisualizer;
 
         [SerializeField]
@@ -13,36 +14,40 @@ namespace GridSystemV2
         public int height;
         public int xOrg;
         public int yOrg;
+        public int tileSize;
+        public int layer;
         public float magnification;
         public GameObject dirtPrefab;
         public GameObject greensPrefab;
         public GameObject stonePrefab;
         public GameObject waterPrefab;
-        private GridSystem grid;
-        private int[,] tileGrid;
+        [SerializeField]
+        public Cell[] cells;
         void Awake()
         {
-            grid = new GridSystem(height, width);
+            cells = new Cell[height * width];
+            grid.setGridSystemParams(height, width, tileSize, layer);
             GameObject[] prefabs = { dirtPrefab, greensPrefab, stonePrefab, waterPrefab };
             mapVisualizer.setPrefabs(prefabs);
-
         }
         void Start()
         {
-            grid.createGrid();
+            Tile[,] tileGrid = grid.createGrid();
             mapVisualizer.CreateTileset();
             mapVisualizer.CreateTileGroups();
+            // mapVisualizer.setPosition(-width / 2 + tileSize / 2, 0, height / 2 - ((byte)tileSize) / 2);
             generateMap(xOrg, yOrg, magnification, mapVisualizer.getTileCount());
         }
         public void generateMap(int x_offset, int y_offset, float magnification, int CellObjectTypeCount)
         {
-            for (int x = 0; x < width; x++)
+            for (int i = 0; i < width; i++)
             {
-                for (int y = 0; y < height; y++)
+                for (int j = 0; j < height; j++)
                 {
-                    int tile_id = getIdUsingPerlin(x, y, x_offset, y_offset, magnification, CellObjectTypeCount);
-                    grid.setTile(x, y, tile_id);
-                    mapVisualizer.CreateTile(x, y, tile_id);
+                    int tile_id = getIdUsingPerlin(i, j, x_offset, y_offset, magnification, CellObjectTypeCount);
+                    Cell.CellType t = (Cell.CellType)tile_id;
+                    cells[i + j * width] = new Cell { type = t, position = grid.calculateCoordinatesFromIndex(i + j * width) };
+                    mapVisualizer.CreateTile(i, j, tile_id);
                 }
             }
         }
@@ -67,5 +72,22 @@ namespace GridSystemV2
             }
             return Mathf.FloorToInt(scaled_perlin);
         }
+        [Serializable]
+        public class Cell
+        {
+            [Serializable]
+            public enum CellType
+            {
+                Empty = -1,
+                Dirt = 0,
+                Greens = 1,
+                Stone = 2,
+                Water = 3
+            }
+            [SerializeField]
+            public CellType type;
+            public Vector3 position;
+        }
     }
+
 }

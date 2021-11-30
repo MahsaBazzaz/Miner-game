@@ -33,5 +33,4 @@ namespace GridSystemV1
         Stone = 2,
         Water = 3
     }
-
 }

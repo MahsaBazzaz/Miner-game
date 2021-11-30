@@ -10,6 +10,10 @@ namespace GridSystemV2
         private Dictionary<int, GameObject> tile_groups;
         private Dictionary<int, GameObject> tileset;
         private GameObject[] prefabs;
+        public void setPosition(float x, float y, float z)
+        {
+            transform.position = new Vector3(x, y, z);
+        }
         public void setPrefabs(GameObject[] prefabs)
         {
             this.prefabs = prefabs;
