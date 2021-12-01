@@ -44,7 +44,7 @@ namespace GridSystemV2
                 tile_groups.Add(prefab_pair.Key, tile_group);
             }
         }
-        public void CreateTile(int x, int y, int tile_id, Vector3 position)
+        public void CreateTile(int x, int y, int tile_id, Vector3 position, int tileSize)
         {
             /** Creates a new tile using the type id code, group it with common
                 tiles, set it's position and store the gameobject. **/
@@ -52,9 +52,9 @@ namespace GridSystemV2
             GameObject tile_prefab = tileset[tile_id];
             GameObject tile_group = tile_groups[tile_id];
             GameObject tile = Instantiate(tile_prefab, tile_group.transform);
-
             tile.name = string.Format("tile_x{0}_y{1}", x, y);
             tile.transform.localPosition = position;
+            tile.transform.localScale = new Vector3(tileSize, tileSize, 1);
         }
         public void DestroyTile(Vector3 pos)
         {

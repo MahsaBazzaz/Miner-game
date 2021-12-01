@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace GridSystemV2
 {
-    public class Controller : MonoBehaviour
+    public class ChamberSpawner : MonoBehaviour
     {
         public GridSystem grid;
-        public Button ChamberButton;
-        public GameObject chamberPrefab;
+        public UIManager uIManager;
         public Transform ChamberParent;
         private bool IsInsertingChamber;
         private GameObject chamberInstance;
+        public List<Chamber> chambers;
         void Awake()
         {
             IsInsertingChamber = false;
@@ -35,18 +35,21 @@ namespace GridSystemV2
                 }
             }
         }
-        public void OnChamberClick()
+        public void spawn(int index)
         {
-            ChamberButton.interactable = false;
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -1);
-            chamberInstance = Instantiate(chamberPrefab, position, Quaternion.identity);
+            chamberInstance = Instantiate(chambers[index].prefab, position, Quaternion.identity);
             chamberInstance.transform.localScale = new Vector3(grid.tileSize, grid.tileSize, 1);
             chamberInstance.transform.parent = ChamberParent;
+
+            ChamberInstance chambercomponent = chamberInstance.AddComponent<ChamberInstance>();
+            chambercomponent.shape = chambers[index].shape;
+
             IsInsertingChamber = true;
         }
         private void OnChamberInserted()
         {
-            ChamberButton.interactable = true;
+            uIManager.SetButtonInteractable();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace GridSystemV2
                     Cell.CellType t = (Cell.CellType)tile_id;
                     Vector3 pos = grid.calculateCoordinatesFromIndex(row + col * width);
                     cells[row * width + col] = new Cell { type = t, position = pos };
-                    mapVisualizer.CreateTile(row, col, tile_id, pos);
+                    mapVisualizer.CreateTile(row, col, tile_id, pos, tileSize);
                 }
             }
         }
