@@ -8,6 +8,8 @@ namespace GridSystemV2
     [CreateAssetMenu(fileName = "Chamber", menuName = "Chamber/New Chamber", order = 1)]
     public class Chamber : ScriptableObject
     {
+        public int height;
+        public int width;
         public List<ChamberCell> shape;
         public int pivotIndex;
         public GameObject prefab;

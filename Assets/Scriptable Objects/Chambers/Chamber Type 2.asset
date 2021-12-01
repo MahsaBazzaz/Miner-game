@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d813943ea9e1b1f43815e990158d6949, type: 3}
   m_Name: Chamber Type 2
   m_EditorClassIdentifier: 
+  height: 3
+  width: 2
   shape:
   - row: 0
     col: 0

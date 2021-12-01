@@ -29,6 +29,10 @@ namespace GridSystemV2
                 {
                     var finalPosition = grid.GetNearestPointOnGrid(mouseWorldPosition);
                     chamberInstance.transform.position = finalPosition;
+
+                    ChamberInstance chambercomponent = chamberInstance.AddComponent<ChamberInstance>();
+                    chambercomponent.position = finalPosition;
+
                     IsInsertingChamber = false;
                     OnChamberInserted();
                     chamberInstance = null;
@@ -43,6 +47,8 @@ namespace GridSystemV2
             chamberInstance.transform.parent = ChamberParent;
 
             ChamberInstance chambercomponent = chamberInstance.AddComponent<ChamberInstance>();
+            chambercomponent.height = chambers[index].height;
+            chambercomponent.width = chambers[index].width;
             chambercomponent.shape = chambers[index].shape;
 
             IsInsertingChamber = true;
