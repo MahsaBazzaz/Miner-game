@@ -31,7 +31,7 @@ namespace GridSystemV2
                     chamberInstance.transform.position = finalPosition;
 
                     ChamberInstance chambercomponent = chamberInstance.AddComponent<ChamberInstance>();
-                    chambercomponent.position = finalPosition;
+                    chambercomponent.originPosition = finalPosition;
 
                     IsInsertingChamber = false;
                     OnChamberInserted();

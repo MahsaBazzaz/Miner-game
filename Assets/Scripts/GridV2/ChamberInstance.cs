@@ -9,7 +9,7 @@ namespace GridSystemV2
         public int height;
         public int width;
         public List<Chamber.ChamberCell> shape;
-        public Vector3 position;
+        public Vector3 originPosition;
 
     }
 }
